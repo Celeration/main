@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+    <meta charset="UTF-8">
+    <title>Соколов ИП204</title>
+    <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+<!-- partial:index.partial.html -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Slide Navbar</title>
+    <link href="https://fonts.googleapis.com/css2?family=Jost:wght@500&display=swap" rel="stylesheet">
+</head>
+<body>
+<div class="main">
+    <input type="checkbox" id="chk" aria-hidden="true">
+
+    <div class="signup">
+        <form>
+            <label for="chk" aria-hidden="true">Регистрация</label>
+
+            <input id="email" type="email" name="email" placeholder="Email" required="">
+            <input id="username" type="text" name="username" placeholder="Имя" required="">
+            <input id="password" type="text" name="password" placeholder="Фамилия" required="">
+            <input id="dareOfBirth" type="date" name="dareOfBirth" placeholder="Дата рождения" required="">
+
+            <button type="button" onclick="submitForm()">Регистрация</button>
+        </form>
+    </div>
+</div>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/json2/20150503/json2.min.js"></script>
+
+<script>
+function submitForm() {
+        const username = document.getElementById('username').value;
+        const password = document.getElementById('password').value;
+        const email = document.getElementById('email').value;
+        const dareOfBirth = document.getElementById('dareOfBirth').value;
+
+        fetch('http://localhost:8080/api/v1/security/save_security', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                fullName: username,
+                password: password,
+                dareOfBirth: dareOfBirth,
+                email: email,
+            }),
+        })
+            .then(response => response.json())
+            .then(data => {
+                console.log('Ответ от сервера:', data);
+            })
+            .catch(error => {
+                console.error('Ошибка запроса: ', error);
+            });
+    }
+</script>
+</body>
+</html>
+
+
